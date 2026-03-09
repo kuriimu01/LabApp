@@ -92,6 +92,8 @@ namespace LabApp
             string username = this.LoginField.Text.Trim();
             string password = this.PasswordField.Text;
             int useStrongPass = this.StrongPassCheckbox.Checked ? 1 : 0;
+            SecurityLevel securityLevel = SecurityLevel.NotSecret;
+            int isAdmin = 0;
 
 
             // Check if user already exists
@@ -110,7 +112,9 @@ namespace LabApp
             {
                 Username = username,
                 PasswordHash = passwordHash,
-                UseStrongPassword = useStrongPass
+                UseStrongPassword = useStrongPass,
+                SecurityLevel = securityLevel,
+                IsAdmin = isAdmin
             };
 
             // Save the new user to the database

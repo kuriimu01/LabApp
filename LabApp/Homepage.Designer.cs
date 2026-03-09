@@ -31,6 +31,9 @@
             this.HelloUsername = new System.Windows.Forms.Label();
             this.ChangePassButton = new System.Windows.Forms.Button();
             this.LogOutLabel = new System.Windows.Forms.Label();
+            this.resourceData = new System.Windows.Forms.DataGridView();
+            this.openButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.resourceData)).BeginInit();
             this.SuspendLayout();
             // 
             // HelloUsername
@@ -40,7 +43,7 @@
             this.HelloUsername.Font = new System.Drawing.Font("Poppins Medium", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HelloUsername.Location = new System.Drawing.Point(0, 0);
             this.HelloUsername.Name = "HelloUsername";
-            this.HelloUsername.Size = new System.Drawing.Size(798, 450);
+            this.HelloUsername.Size = new System.Drawing.Size(798, 574);
             this.HelloUsername.TabIndex = 0;
             this.HelloUsername.Text = "Username: ";
             this.HelloUsername.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -65,7 +68,7 @@
             this.LogOutLabel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.LogOutLabel.Font = new System.Drawing.Font("Poppins Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogOutLabel.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.LogOutLabel.Location = new System.Drawing.Point(1, 395);
+            this.LogOutLabel.Location = new System.Drawing.Point(0, 519);
             this.LogOutLabel.Name = "LogOutLabel";
             this.LogOutLabel.Size = new System.Drawing.Size(798, 55);
             this.LogOutLabel.TabIndex = 16;
@@ -73,18 +76,51 @@
             this.LogOutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.LogOutLabel.Click += new System.EventHandler(this.LogOutLabel_Click);
             // 
+            // resourceData
+            // 
+            this.resourceData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.resourceData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.resourceData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.resourceData.Location = new System.Drawing.Point(170, 117);
+            this.resourceData.Name = "resourceData";
+            this.resourceData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.resourceData.RowHeadersVisible = false;
+            this.resourceData.RowHeadersWidth = 51;
+            this.resourceData.RowTemplate.Height = 24;
+            this.resourceData.Size = new System.Drawing.Size(465, 346);
+            this.resourceData.TabIndex = 19;
+            // 
+            // openButton
+            // 
+            this.openButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(177)))));
+            this.openButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.openButton.FlatAppearance.BorderSize = 0;
+            this.openButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openButton.Font = new System.Drawing.Font("Poppins", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openButton.Location = new System.Drawing.Point(332, 469);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(129, 33);
+            this.openButton.TabIndex = 20;
+            this.openButton.Text = "Open";
+            this.openButton.UseVisualStyleBackColor = false;
+            this.openButton.Click += new System.EventHandler(this.OpenButton_Click);
+            // 
             // Homepage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(822, 574);
+            this.Controls.Add(this.openButton);
+            this.Controls.Add(this.resourceData);
             this.Controls.Add(this.LogOutLabel);
             this.Controls.Add(this.ChangePassButton);
             this.Controls.Add(this.HelloUsername);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Homepage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Homepage TBD_But";
             this.Load += new System.EventHandler(this.Homepage_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.resourceData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -94,5 +130,7 @@
         private System.Windows.Forms.Label HelloUsername;
         private System.Windows.Forms.Button ChangePassButton;
         private System.Windows.Forms.Label LogOutLabel;
+        private System.Windows.Forms.DataGridView resourceData;
+        private System.Windows.Forms.Button openButton;
     }
 }

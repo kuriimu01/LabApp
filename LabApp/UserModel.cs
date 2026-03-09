@@ -12,5 +12,7 @@ namespace LabApp.TBD_But
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public int UseStrongPassword { get; set; }
+        public SecurityLevel SecurityLevel { get; set; }
+        public int IsAdmin { get; set; }
     }
 }

@@ -102,12 +102,17 @@ namespace LabApp
             UserSession.Login(user);
 
             this.Hide();
+            Form nextForm;
 
-            // Redirect to homepage
-            Homepage homepage = new Homepage();
-            homepage.FormClosed += (s, ec) =>
+            // Redirect to homepage or admin panel based on user role
+            if (user.IsAdmin == 1)
+                nextForm = new AdminPannel();
+            else
+                nextForm = new Homepage();
+
+            nextForm.FormClosed += (s, ec) =>
             {
-                if (homepage.IsLogout)
+                if (nextForm is Homepage hp && hp.IsLogout)
                 {
                     this.LoginField.Text = "";
                     this.PasswordField.Text = "";
@@ -118,7 +123,7 @@ namespace LabApp
                     this.Close();
                 }
             };
-            homepage.Show();
+            nextForm.Show();
         }
     }
 }
