@@ -180,14 +180,17 @@ namespace LabApp
         {
             using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
             {
-                return con.Query<RoleAccessRule>("SELECT * FROM RoleAccessRules").ToList();
+                string sql = "SELECT Id, RoleId, ResourceId, CanRead, CanExecute, CAST(CanWrite AS INTEGER) AS CanWrite, TimeStart, TimeEnd, IpRestrict FROM RoleAccessRules";
+                return con.Query<RoleAccessRule>(sql).ToList();
             }
         }
         public static void SaveRoleAccessRule(RoleAccessRule rule)
         {
             using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
             {
-                string sql = "INSERT OR REPLACE INTO RoleAccessRules (Id, RoleId, ResourceId, CanRead, CanWrite, CanExecute) VALUES (@Id, @RoleId, @ResourceId, @CanRead, @CanWrite, @CanExecute)";
+                string sql = @"INSERT OR REPLACE INTO RoleAccessRules 
+                       (Id, RoleId, ResourceId, CanRead, CanWrite, CanExecute, TimeStart, TimeEnd, IpRestrict) 
+                       VALUES (@Id, @RoleId, @ResourceId, @CanRead, @CanWrite, @CanExecute, @TimeStart, @TimeEnd, @IpRestrict)";
                 con.Execute(sql, rule);
             }
         }

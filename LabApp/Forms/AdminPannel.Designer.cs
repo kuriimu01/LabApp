@@ -165,7 +165,7 @@
             this.rolesData.RowHeadersVisible = false;
             this.rolesData.RowHeadersWidth = 51;
             this.rolesData.RowTemplate.Height = 24;
-            this.rolesData.Size = new System.Drawing.Size(474, 372);
+            this.rolesData.Size = new System.Drawing.Size(800, 372);
             this.rolesData.TabIndex = 23;
             // 
             // AddRoleAccessRule
@@ -175,7 +175,7 @@
             this.AddRoleAccessRule.FlatAppearance.BorderSize = 0;
             this.AddRoleAccessRule.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddRoleAccessRule.Font = new System.Drawing.Font("Poppins", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddRoleAccessRule.Location = new System.Drawing.Point(1241, 411);
+            this.AddRoleAccessRule.Location = new System.Drawing.Point(1395, 413);
             this.AddRoleAccessRule.Name = "AddRoleAccessRule";
             this.AddRoleAccessRule.Size = new System.Drawing.Size(99, 27);
             this.AddRoleAccessRule.TabIndex = 24;
@@ -190,7 +190,7 @@
             this.SaveRoleAccessRule.FlatAppearance.BorderSize = 0;
             this.SaveRoleAccessRule.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveRoleAccessRule.Font = new System.Drawing.Font("Poppins", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveRoleAccessRule.Location = new System.Drawing.Point(1397, 414);
+            this.SaveRoleAccessRule.Location = new System.Drawing.Point(1686, 411);
             this.SaveRoleAccessRule.Name = "SaveRoleAccessRule";
             this.SaveRoleAccessRule.Size = new System.Drawing.Size(99, 27);
             this.SaveRoleAccessRule.TabIndex = 25;
@@ -279,7 +279,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1508, 916);
+            this.ClientSize = new System.Drawing.Size(1832, 916);
             this.Controls.Add(this.disSave);
             this.Controls.Add(this.disAdd);
             this.Controls.Add(this.disDel);

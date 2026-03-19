@@ -86,7 +86,22 @@ namespace LabApp
                 GridService.SetupCheckBoxColumn(rolesData, "CanWrite", "Write");
                 GridService.SetupCheckBoxColumn(rolesData, "CanExecute", "Execute");
 
+                if (rolesData.Columns.Contains("TimeStart")) rolesData.Columns["TimeStart"].Visible = true;
+                if (rolesData.Columns.Contains("TimeEnd")) rolesData.Columns["TimeEnd"].Visible = true;
+                if (rolesData.Columns.Contains("IpRestrict")) rolesData.Columns["IpRestrict"].Visible = true;
+
                 rolesData.Columns["Id"].ReadOnly = true;
+
+                if (rolesData.Columns.Contains("Id")) rolesData.Columns["Id"].DisplayIndex = 0;
+                if (rolesData.Columns.Contains("RoleId")) rolesData.Columns["RoleId"].DisplayIndex = 1;
+                if (rolesData.Columns.Contains("ResourceId")) rolesData.Columns["ResourceId"].DisplayIndex = 2;
+                if (rolesData.Columns.Contains("CanRead")) rolesData.Columns["CanRead"].DisplayIndex = 3;
+                if (rolesData.Columns.Contains("CanWrite")) rolesData.Columns["CanWrite"].DisplayIndex = 4;
+                if (rolesData.Columns.Contains("CanExecute")) rolesData.Columns["CanExecute"].DisplayIndex = 5;
+                if (rolesData.Columns.Contains("TimeStart")) rolesData.Columns["TimeStart"].DisplayIndex = 6;
+                if (rolesData.Columns.Contains("TimeEnd")) rolesData.Columns["TimeEnd"].DisplayIndex = 7;
+                if (rolesData.Columns.Contains("IpRestrict")) rolesData.Columns["IpRestrict"].DisplayIndex = 8;
+
                 rolesData.ScrollBars = ScrollBars.Both;
                 rolesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             }

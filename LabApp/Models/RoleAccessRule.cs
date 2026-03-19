@@ -14,5 +14,8 @@ namespace LabApp.Models
         public int CanRead { get; set; }
         public int CanWrite { get; set; }
         public int CanExecute { get; set; }
+        public string TimeStart { get; set; }
+        public string TimeEnd { get; set; }
+        public string IpRestrict { get; set; }
     }
 }

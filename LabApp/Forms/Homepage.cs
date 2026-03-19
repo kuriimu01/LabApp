@@ -100,7 +100,10 @@ namespace LabApp
             resourceData.Columns["CanWrite"].ReadOnly = true;
             resourceData.Columns["CanExecute"].ReadOnly = true;
 
-            if (SecuritySettings.CurrentModel == AccessModel.Discretionary)
+            bool showExtendedInfo = SecuritySettings.CurrentModel == AccessModel.Discretionary ||
+                                    SecuritySettings.CurrentModel == AccessModel.RoleBased;
+
+            if (showExtendedInfo)
             {
                 if (!resourceData.Columns.Contains("TimeStart")) resourceData.Columns.Add("TimeStart", "Time Start");
                 if (!resourceData.Columns.Contains("TimeEnd")) resourceData.Columns.Add("TimeEnd", "Time End");
@@ -110,22 +113,35 @@ namespace LabApp
                 resourceData.Columns["TimeEnd"].ReadOnly = true;
                 resourceData.Columns["IpRestrict"].ReadOnly = true;
 
-                var accessRules = DbDataAccess.LoadAccessRules().Where(r => r.UserId == user.Id).ToList();
-
                 for (int i = 0; i < allowedResources.Count; i++)
                 {
                     var res = allowedResources[i];
-                    var rule = accessRules.FirstOrDefault(r => r.ResourceId == res.Id);
 
                     resourceData.Rows[i].Cells["CanRead"].Value = accessMap[res.Id].Item1 ? 1 : 0;
                     resourceData.Rows[i].Cells["CanWrite"].Value = accessMap[res.Id].Item2 ? 1 : 0;
                     resourceData.Rows[i].Cells["CanExecute"].Value = accessMap[res.Id].Item3 ? 1 : 0;
 
-                    if (rule != null)
+                    if (SecuritySettings.CurrentModel == AccessModel.Discretionary)
                     {
-                        resourceData.Rows[i].Cells["TimeStart"].Value = rule.TimeStart;
-                        resourceData.Rows[i].Cells["TimeEnd"].Value = rule.TimeEnd;
-                        resourceData.Rows[i].Cells["IpRestrict"].Value = rule.IpRestrict;
+                        var rules = DbDataAccess.LoadAccessRules().Where(r => r.UserId == user.Id).ToList();
+                        var rule = rules.FirstOrDefault(r => r.ResourceId == res.Id);
+                        if (rule != null)
+                        {
+                            resourceData.Rows[i].Cells["TimeStart"].Value = rule.TimeStart;
+                            resourceData.Rows[i].Cells["TimeEnd"].Value = rule.TimeEnd;
+                            resourceData.Rows[i].Cells["IpRestrict"].Value = rule.IpRestrict;
+                        }
+                    }
+                    else if (SecuritySettings.CurrentModel == AccessModel.RoleBased)
+                    {
+                        var rules = DbDataAccess.LoadRoleAccessRules().Where(r => r.RoleId == user.RoleId).ToList();
+                        var rule = rules.FirstOrDefault(r => r.ResourceId == res.Id);
+                        if (rule != null)
+                        {
+                            resourceData.Rows[i].Cells["TimeStart"].Value = rule.TimeStart;
+                            resourceData.Rows[i].Cells["TimeEnd"].Value = rule.TimeEnd;
+                            resourceData.Rows[i].Cells["IpRestrict"].Value = rule.IpRestrict;
+                        }
                     }
                 }
             }
