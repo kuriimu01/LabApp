@@ -6,18 +6,19 @@ namespace LabApp
     {
         public static UserModel CurrentUser { get; private set; }
 
+        public static bool IsAuthenticated => CurrentUser != null;
+
+        public static bool IsAdmin => CurrentUser?.IsAdmin == 1;
+
+        public static string Role => ((UserRole)CurrentUser.RoleId).ToString();
         public static void Login(UserModel user)
         {
             CurrentUser = user;
         }
 
-        public static void Logout() {
-            CurrentUser = null;
-        }
-
-        public static bool IsAuthenticated()
+        public static void Logout()
         {
-            return CurrentUser != null;
+            CurrentUser = null;
         }
     }
 }

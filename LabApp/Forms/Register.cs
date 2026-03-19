@@ -12,9 +12,9 @@ using System.Windows.Forms;
 namespace LabApp
 {
     
-    public partial class RegisterForm : Form
+    public partial class Register : Form
     {
-        public RegisterForm()
+        public Register()
         {
             InitializeComponent();
             this.PasswordField.AutoSize = false;
@@ -81,13 +81,13 @@ namespace LabApp
 
         private void LogInRedirect_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm();
+            Login loginForm = new Login();
             loginForm.Show();
 
             this.Hide();
         }
 
-        private void logInButton_Click(object sender, EventArgs e)
+        private void SignInButton_Click(object sender, EventArgs e)
         {
             string username = this.LoginField.Text.Trim();
             string password = this.PasswordField.Text;
@@ -105,7 +105,7 @@ namespace LabApp
             }
 
             // Hash the password
-            string passwordHash = PasswordHelper.HashPassword(password);
+            string passwordHash = PasswordService.HashPassword(password);
 
             // Create new user model
             UserModel NewUser = new UserModel
@@ -114,7 +114,8 @@ namespace LabApp
                 PasswordHash = passwordHash,
                 UseStrongPassword = useStrongPass,
                 SecurityLevel = securityLevel,
-                IsAdmin = isAdmin
+                IsAdmin = isAdmin,
+                RoleId = 4
             };
 
             // Save the new user to the database

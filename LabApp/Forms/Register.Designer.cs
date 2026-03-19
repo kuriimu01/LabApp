@@ -1,6 +1,6 @@
 ﻿namespace LabApp
 {
-    partial class RegisterForm
+    partial class Register
     {
         /// <summary>
         /// Required designer variable.
@@ -121,7 +121,7 @@
             this.logInButton.TabIndex = 4;
             this.logInButton.Text = "submit";
             this.logInButton.UseVisualStyleBackColor = false;
-            this.logInButton.Click += new System.EventHandler(this.logInButton_Click);
+            this.logInButton.Click += new System.EventHandler(this.SignInButton_Click);
             // 
             // StrongPassCheckbox
             // 

@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using LabApp.Models;
+using LabApp.Security;
 using LabApp.TBD_But;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,13 +29,14 @@ namespace LabApp
             }
         }
 
-        public static void SaveUser(UserModel user) {
+        public static void SaveUser(UserModel user)
+        {
             using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
             {
                 con.Execute(
                     @"INSERT INTO Users 
-                    (Username, PasswordHash, UseStrongPassword, SecurityLevel, IsAdmin) 
-                    VALUES (@Username, @PasswordHash, @UseStrongPassword, @SecurityLevel, @IsAdmin)",
+                    (Username, PasswordHash, UseStrongPassword, SecurityLevel, IsAdmin, RoleId) 
+                    VALUES (@Username, @PasswordHash, @UseStrongPassword, @SecurityLevel, @IsAdmin, @RoleId)",
                     user
                 );
             }
@@ -47,7 +50,8 @@ namespace LabApp
                       SET PasswordHash = @PasswordHash,
                           UseStrongPassword = @UseStrongPassword,
                           SecurityLevel = @SecurityLevel,
-                          IsAdmin = @IsAdmin
+                          IsAdmin = @IsAdmin,
+                          RoleId = @RoleId
                       WHERE Id = @Id",
                     user
                 );
@@ -131,6 +135,67 @@ namespace LabApp
         ";
 
                 con.Execute(sql, resource);
+            }
+        }
+
+        // Roles
+        public static List<RoleModel> LoadRoles()
+        {
+            using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
+            {
+                return con.Query<RoleModel>("SELECT * FROM Roles").ToList();
+            }
+        }
+
+
+        // Discretionary based
+        public static List<AccessRule> LoadAccessRules()
+        {
+            using (System.Data.IDbConnection con = new System.Data.SQLite.SQLiteConnection(LoadConnectionString()))
+            {
+                string sql = "SELECT Id, UserId, ResourceId, CanRead, CanExecute, CAST(CanWrite AS INTEGER) AS CanWrite, TimeStart, TimeEnd, IpRestrict FROM AccessRules";
+                return con.Query<AccessRule>(sql).ToList();
+            }
+        }
+        public static void SaveAccessRule(AccessRule rule)
+        {
+            using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
+            {
+                string sql = @"INSERT OR REPLACE INTO AccessRules 
+        (Id, UserId, ResourceId, CanRead, CanWrite, CanExecute, TimeStart, TimeEnd, IpRestrict) 
+        VALUES (@Id, @UserId, @ResourceId, @CanRead, @CanWrite, @CanExecute, @TimeStart, @TimeEnd, @IpRestrict)";
+                con.Execute(sql, rule);
+            }
+        }
+
+        public static void DeleteAccessRule(int id)
+        {
+            using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
+            {
+                con.Execute("DELETE FROM AccessRules WHERE Id = @Id", new { Id = id });
+            }
+        }
+        // Role based
+        public static List<RoleAccessRule> LoadRoleAccessRules()
+        {
+            using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
+            {
+                return con.Query<RoleAccessRule>("SELECT * FROM RoleAccessRules").ToList();
+            }
+        }
+        public static void SaveRoleAccessRule(RoleAccessRule rule)
+        {
+            using (IDbConnection con = new SQLiteConnection(LoadConnectionString()))
+            {
+                string sql = "INSERT OR REPLACE INTO RoleAccessRules (Id, RoleId, ResourceId, CanRead, CanWrite, CanExecute) VALUES (@Id, @RoleId, @ResourceId, @CanRead, @CanWrite, @CanExecute)";
+                con.Execute(sql, rule);
+            }
+        }
+        public static void DeleteRoleAccessRule(int id)
+        {
+            using (System.Data.IDbConnection con = new System.Data.SQLite.SQLiteConnection(LoadConnectionString()))
+            {
+                con.Execute("DELETE FROM RoleAccessRules WHERE Id = @Id", new { Id = id });
             }
         }
 

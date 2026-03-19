@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace LabApp
 {
-    internal static class PasswordHelper
+    internal static class PasswordService
     {
         private const int SaltSize = 16; // 128 bit
         private const int HashSize = 32; // 256 bit for SHA256

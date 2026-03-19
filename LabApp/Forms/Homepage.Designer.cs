@@ -33,6 +33,8 @@
             this.LogOutLabel = new System.Windows.Forms.Label();
             this.resourceData = new System.Windows.Forms.DataGridView();
             this.openButton = new System.Windows.Forms.Button();
+            this.RoleLabel = new System.Windows.Forms.Label();
+            this.refreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.resourceData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,16 +80,16 @@
             // 
             // resourceData
             // 
-            this.resourceData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.resourceData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.resourceData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.resourceData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resourceData.Location = new System.Drawing.Point(170, 117);
+            this.resourceData.Location = new System.Drawing.Point(65, 117);
             this.resourceData.Name = "resourceData";
             this.resourceData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.resourceData.RowHeadersVisible = false;
             this.resourceData.RowHeadersWidth = 51;
             this.resourceData.RowTemplate.Height = 24;
-            this.resourceData.Size = new System.Drawing.Size(465, 346);
+            this.resourceData.Size = new System.Drawing.Size(680, 346);
             this.resourceData.TabIndex = 19;
             // 
             // openButton
@@ -105,11 +107,39 @@
             this.openButton.UseVisualStyleBackColor = false;
             this.openButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
+            // RoleLabel
+            // 
+            this.RoleLabel.AutoSize = true;
+            this.RoleLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.RoleLabel.Font = new System.Drawing.Font("Poppins Medium", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RoleLabel.Location = new System.Drawing.Point(12, 6);
+            this.RoleLabel.Name = "RoleLabel";
+            this.RoleLabel.Size = new System.Drawing.Size(67, 31);
+            this.RoleLabel.TabIndex = 21;
+            this.RoleLabel.Text = "Role: ";
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(177)))));
+            this.refreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.refreshButton.FlatAppearance.BorderSize = 0;
+            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.refreshButton.Font = new System.Drawing.Font("Poppins", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refreshButton.Location = new System.Drawing.Point(65, 469);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(129, 33);
+            this.refreshButton.TabIndex = 22;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.UseVisualStyleBackColor = false;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
             // Homepage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 574);
+            this.Controls.Add(this.refreshButton);
+            this.Controls.Add(this.RoleLabel);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.resourceData);
             this.Controls.Add(this.LogOutLabel);
@@ -122,6 +152,7 @@
             this.Load += new System.EventHandler(this.Homepage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.resourceData)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -132,5 +163,7 @@
         private System.Windows.Forms.Label LogOutLabel;
         private System.Windows.Forms.DataGridView resourceData;
         private System.Windows.Forms.Button openButton;
+        private System.Windows.Forms.Label RoleLabel;
+        private System.Windows.Forms.Button refreshButton;
     }
 }

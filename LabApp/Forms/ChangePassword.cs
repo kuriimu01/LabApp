@@ -1,4 +1,5 @@
 ﻿using LabApp.TBD_But;
+using LabApp.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,33 +52,22 @@ namespace LabApp
         }
         private void ChangePassButton_Click(object sender, EventArgs e)
         {
-            string newPassword = this.NewPasswordField.Text;
-            string confirmedPassword = this.ConfirmPasswordField.Text;
-
-            // Ensure user is authenticated before allowing password change
-            if (!UserSession.IsAuthenticated())
+            if (!UserSession.IsAuthenticated)
             {
                 MessageBox.Show("User is not authenticated.");
                 this.Close();
                 return;
             }
-            // Get the current user from the session
-            UserModel user = UserSession.CurrentUser;
-            // Validate that the new password and confirmation match
-            if (newPassword != confirmedPassword)
+
+            var user = UserSession.CurrentUser;
+            string newPassword = NewPasswordField.Text;
+            string confirmPassword = ConfirmPasswordField.Text;
+
+            if (!UserService.ChangePassword(user, newPassword, confirmPassword, out string error))
             {
-                this.errorLabel.Text = "Passwords do not match.";
+                this.errorLabel.Text = error;
                 return;
             }
-            // Validate the new password 
-            if (!ValidateUser.IsPasswordValid(newPassword, UserSession.CurrentUser.UseStrongPassword != 0, out string passwordError))
-            {
-                this.errorLabel.Text = passwordError;
-                return;
-            }
-            // Update the user's password hash in the database
-            user.PasswordHash = PasswordHelper.HashPassword(newPassword);
-            DbDataAccess.UpdateUser(user);
 
             MessageBox.Show("Password changed successfully.");
             this.Close();

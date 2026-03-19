@@ -1,4 +1,5 @@
 ﻿using LabApp.TBD_But;
+using LabApp.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,9 @@ using System.Windows.Forms;
 
 namespace LabApp
 {
-    public partial class LoginForm : Form
+    public partial class Login : Form
     {
-        public LoginForm()
+        public Login()
         {
             InitializeComponent();
 
@@ -66,7 +67,7 @@ namespace LabApp
 
         private void SignInRedirect_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = new RegisterForm();
+            Register registerForm = new Register();
             registerForm.Show();
 
             this.Hide();
@@ -78,37 +79,16 @@ namespace LabApp
             string username = this.LoginField.Text.Trim();
             string password = this.PasswordField.Text;
 
-            // Find a user
-            var user = DbDataAccess.LoadUser(username);
-
-            // If user not found, show error
-            if (user == null)
+            if (!UserService.Authenticate(username, password, out UserModel user))
             {
-                MessageBox.Show("User not found.");
+                MessageBox.Show("Invalid username or password.");
                 return;
             }
 
-            // Verify password
-            bool PasswordOk = PasswordHelper.VerifyPassword(password, user.PasswordHash);
-
-
-            if (!PasswordOk)
-            {
-                MessageBox.Show("Incorrect password.");
-                return;
-            }
-
-            // Log in the user  
             UserSession.Login(user);
 
             this.Hide();
-            Form nextForm;
-
-            // Redirect to homepage or admin panel based on user role
-            if (user.IsAdmin == 1)
-                nextForm = new AdminPannel();
-            else
-                nextForm = new Homepage();
+            Form nextForm = (user.IsAdmin == 1) ? (Form)new AdminPannel() : (Form)new Homepage();
 
             nextForm.FormClosed += (s, ec) =>
             {
@@ -125,6 +105,7 @@ namespace LabApp
             };
             nextForm.Show();
         }
+
     }
 }
 

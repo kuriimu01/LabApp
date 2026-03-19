@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabApp.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace LabApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new ChooseModel());
+
         }
     }
 }

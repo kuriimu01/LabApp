@@ -14,5 +14,13 @@ namespace LabApp.TBD_But
         public int UseStrongPassword { get; set; }
         public SecurityLevel SecurityLevel { get; set; }
         public int IsAdmin { get; set; }
+        public int RoleId { get; set; }
+    }
+    public enum UserRole
+    {
+        Administrator = 1,
+        Manager = 2,
+        Guest = 3,
+        Tester = 4
     }
 }
