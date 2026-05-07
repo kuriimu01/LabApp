@@ -41,6 +41,7 @@
             this.SignInRedirect = new System.Windows.Forms.Label();
             this.StrongPassCheckbox = new System.Windows.Forms.CheckBox();
             this.BruteRedirect = new System.Windows.Forms.Button();
+            this.TestBot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -190,7 +191,21 @@
             this.BruteRedirect.TabIndex = 21;
             this.BruteRedirect.Text = "Brute Force";
             this.BruteRedirect.UseVisualStyleBackColor = false;
-            this.BruteRedirect.Click += new System.EventHandler(this.BruteRedirect_Click);
+            // 
+            // TestBot
+            // 
+            this.TestBot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(177)))));
+            this.TestBot.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TestBot.FlatAppearance.BorderSize = 0;
+            this.TestBot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TestBot.Font = new System.Drawing.Font("Poppins", 10F);
+            this.TestBot.Location = new System.Drawing.Point(254, 448);
+            this.TestBot.Name = "TestBot";
+            this.TestBot.Size = new System.Drawing.Size(159, 33);
+            this.TestBot.TabIndex = 22;
+            this.TestBot.Text = "Test Bot";
+            this.TestBot.UseVisualStyleBackColor = false;
+            this.TestBot.Click += new System.EventHandler(this.TestBot_Click);
             // 
             // Login
             // 
@@ -198,6 +213,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(682, 553);
+            this.Controls.Add(this.TestBot);
             this.Controls.Add(this.BruteRedirect);
             this.Controls.Add(this.SignInRedirect);
             this.Controls.Add(this.pictureBox2);
@@ -238,5 +254,6 @@
         private System.Windows.Forms.Label SignInRedirect;
         private System.Windows.Forms.CheckBox StrongPassCheckbox;
         private System.Windows.Forms.Button BruteRedirect;
+        private System.Windows.Forms.Button TestBot;
     }
 }

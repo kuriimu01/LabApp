@@ -14,8 +14,7 @@ namespace LabApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BruteForce());
-            //Application.Run(new ChooseModel());
+            Application.Run(new ChooseModel());
 
         }
     }

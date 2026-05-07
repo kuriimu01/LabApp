@@ -35,8 +35,8 @@ namespace LabApp
             {
                 con.Execute(
                     @"INSERT INTO Users 
-                    (Username, PasswordHash, UseStrongPassword, SecurityLevel, IsAdmin, RoleId) 
-                    VALUES (@Username, @PasswordHash, @UseStrongPassword, @SecurityLevel, @IsAdmin, @RoleId)",
+            (Username, PasswordHash, UseStrongPassword, SecurityLevel, IsAdmin, RoleId, PasswordChangedDate, OldPassword1, OldPassword2, OldPassword3, FailedAttempts, LockoutEnd) 
+            VALUES (@Username, @PasswordHash, @UseStrongPassword, @SecurityLevel, @IsAdmin, @RoleId, @PasswordChangedDate, @OldPassword1, @OldPassword2, @OldPassword3, @FailedAttempts, @LockoutEnd)",
                     user
                 );
             }
@@ -47,12 +47,18 @@ namespace LabApp
             {
                 con.Execute(
                     @"UPDATE Users 
-                      SET PasswordHash = @PasswordHash,
-                          UseStrongPassword = @UseStrongPassword,
-                          SecurityLevel = @SecurityLevel,
-                          IsAdmin = @IsAdmin,
-                          RoleId = @RoleId
-                      WHERE Id = @Id",
+              SET PasswordHash = @PasswordHash,
+                  UseStrongPassword = @UseStrongPassword,
+                  SecurityLevel = @SecurityLevel,
+                  IsAdmin = @IsAdmin,
+                  RoleId = @RoleId,
+                  PasswordChangedDate = @PasswordChangedDate,
+                  OldPassword1 = @OldPassword1,
+                  OldPassword2 = @OldPassword2,
+                  OldPassword3 = @OldPassword3,
+                  FailedAttempts = @FailedAttempts,
+                  LockoutEnd = @LockoutEnd
+              WHERE Id = @Id",
                     user
                 );
             }

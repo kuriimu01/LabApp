@@ -15,14 +15,29 @@ namespace LabApp
 {
     public partial class Login : Form
     {
+        System.Diagnostics.Stopwatch typingTimer = new System.Diagnostics.Stopwatch();
+        int charCount = 0;
+
         public Login()
         {
             InitializeComponent();
-
             this.PasswordField.AutoSize = false;
             this.PasswordField.Size = new Size(this.PasswordField.Size.Width, this.LoginField.Size.Height);
             this.errorLabel.Text = "";
+
+            // Блокуємо Copy-Paste
+            this.PasswordField.ShortcutsEnabled = false;
+
+            // Прив'язуємо подію для таймера
+            this.PasswordField.KeyPress += PasswordField_KeyPress;
         }
+
+        private void PasswordField_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!typingTimer.IsRunning) typingTimer.Start();
+            charCount++;
+        }
+
         void ValidateForm()
         {
             bool usernameValid = ValidateUser.IsUsernameValid(
@@ -77,20 +92,55 @@ namespace LabApp
 
         private void LogInButton_Click(object sender, EventArgs e)
         {
-            string username = this.LoginField.Text.Trim();
-            string password = this.PasswordField.Text;
+            typingTimer.Stop();
 
-            if (!UserService.Authenticate(username, password, out UserModel user))
+            if (charCount > 0 && (typingTimer.ElapsedMilliseconds / charCount) < 40)
             {
-                MessageBox.Show("Invalid username or password.");
+                MessageBox.Show("Виявлено автоматичне введення пароля! Вхід заблоковано.");
+                ResetTypingMetrics();
                 return;
             }
 
+            string username = this.LoginField.Text.Trim();
+            string password = this.PasswordField.Text;
+
+            // Пробуємо авторизуватися
+            bool isAuthenticated = UserService.Authenticate(username, password, out UserModel user, out string loginError);
+
+            // СЦЕНАРІЙ 1: Пароль вірний, але термін дії минув
+            if (!isAuthenticated && user != null && loginError.Contains("Термін дії пароля минув"))
+            {
+                MessageBox.Show(loginError + "\nЗараз відкриється вікно зміни пароля.", "Необхідне оновлення", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Тимчасово авторизуємо користувача, щоб він міг змінити пароль
+                UserSession.Login(user);
+
+                using (ChangePassword changePassForm = new ChangePassword())
+                {
+                    changePassForm.ShowDialog(); // Відкриваємо модально
+                }
+
+                // Після закриття вікна зміни пароля розлогінюємо, щоб він зайшов уже з новим паролем
+                UserSession.Logout();
+                this.PasswordField.Text = "";
+                ResetTypingMetrics();
+                return;
+            }
+
+            // СЦЕНАРІЙ 2: Звичайна помилка (невірний пароль, блок тощо)
+            if (!isAuthenticated)
+            {
+                MessageBox.Show(loginError, "Помилка входу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ResetTypingMetrics();
+                return;
+            }
+
+            // СЦЕНАРІЙ 3: Успішний вхід
             UserSession.Login(user);
+            ResetTypingMetrics();
 
             this.Hide();
             Form nextForm = (user.IsAdmin == 1) ? (Form)new AdminPannel() : (Form)new Homepage();
-
             nextForm.FormClosed += (s, ec) =>
             {
                 if (nextForm is Homepage hp && hp.IsLogout)
@@ -106,14 +156,32 @@ namespace LabApp
             };
             nextForm.Show();
         }
-
-        private void BruteRedirect_Click(object sender, EventArgs e)
+        private void ResetTypingMetrics()
         {
-            BruteForce bruteForm = new BruteForce();
-            bruteForm.Show();
+            typingTimer.Reset();
+            charCount = 0;
+            this.PasswordField.Text = "";
+        }
 
-            this.Hide();
-            bruteForm.FormClosed += (s, ec) => this.Close();
+        private void TestBot_Click(object sender, EventArgs e)
+        {
+            // 1. Очищаємо все перед тестом
+            ResetTypingMetrics();
+            this.LoginField.Text = "bot_test_user"; // Заповнюємо логін (можеш змінити на існуючий)
+
+            string botPassword = "SuperFastPassword123!";
+
+            // 2. Симулюємо надшвидке посимвольне введення (цикл відпрацює за 0.001 секунди)
+            foreach (char c in botPassword)
+            {
+                this.PasswordField.Text += c;
+
+                // Вручну викликаємо обробник події, ніби клавіша була реально натиснута
+                PasswordField_KeyPress(this, new KeyPressEventArgs(c));
+            }
+
+            // 3. Одразу ж програмно "натискаємо" кнопку Увійти
+            LogInButton_Click(sender, e);
         }
     }
 }
