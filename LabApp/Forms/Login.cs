@@ -1,4 +1,5 @@
-﻿using LabApp.TBD_But;
+﻿using LabApp.Forms;
+using LabApp.TBD_But;
 using LabApp.User;
 using System;
 using System.Collections.Generic;
@@ -106,6 +107,14 @@ namespace LabApp
             nextForm.Show();
         }
 
+        private void BruteRedirect_Click(object sender, EventArgs e)
+        {
+            BruteForce bruteForm = new BruteForce();
+            bruteForm.Show();
+
+            this.Hide();
+            bruteForm.FormClosed += (s, ec) => this.Close();
+        }
     }
 }
 

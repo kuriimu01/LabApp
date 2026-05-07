@@ -40,6 +40,7 @@
             this.AuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SignInRedirect = new System.Windows.Forms.Label();
             this.StrongPassCheckbox = new System.Windows.Forms.CheckBox();
+            this.BruteRedirect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -176,12 +177,28 @@
             this.StrongPassCheckbox.Visible = false;
             this.StrongPassCheckbox.CheckedChanged += new System.EventHandler(this.StrongPassCheckbox_CheckedChanged);
             // 
+            // BruteRedirect
+            // 
+            this.BruteRedirect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(177)))));
+            this.BruteRedirect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BruteRedirect.FlatAppearance.BorderSize = 0;
+            this.BruteRedirect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BruteRedirect.Font = new System.Drawing.Font("Poppins", 10F);
+            this.BruteRedirect.Location = new System.Drawing.Point(254, 487);
+            this.BruteRedirect.Name = "BruteRedirect";
+            this.BruteRedirect.Size = new System.Drawing.Size(159, 33);
+            this.BruteRedirect.TabIndex = 21;
+            this.BruteRedirect.Text = "Brute Force";
+            this.BruteRedirect.UseVisualStyleBackColor = false;
+            this.BruteRedirect.Click += new System.EventHandler(this.BruteRedirect_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(682, 553);
+            this.Controls.Add(this.BruteRedirect);
             this.Controls.Add(this.SignInRedirect);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -220,5 +237,6 @@
         private System.Windows.Forms.ToolStripMenuItem AuthorToolStripMenuItem;
         private System.Windows.Forms.Label SignInRedirect;
         private System.Windows.Forms.CheckBox StrongPassCheckbox;
+        private System.Windows.Forms.Button BruteRedirect;
     }
 }
