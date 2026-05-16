@@ -1,3 +1,9 @@
 <Solution>
-  <Project Path="LabApp/LabApp.csproj" Id="c9e9b107-b707-4ffd-9020-bf9ccab033e7" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="LabApp/LabApp.csproj" Id="c9e9b107-b707-4ffd-9020-bf9ccab033e7">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

@@ -183,6 +183,64 @@ namespace LabApp
             // 3. Одразу ж програмно "натискаємо" кнопку Увійти
             LogInButton_Click(sender, e);
         }
+
+        private void BiometricLoginButton_Click(object sender, EventArgs e)
+        {
+            using (LabApp.Forms.BiometricLogin bioForm = new LabApp.Forms.BiometricLogin())
+            {
+                if (bioForm.ShowDialog() == DialogResult.OK && bioForm.AuthenticatedUser != null)
+                {
+                    // СЦЕНАРІЙ: Успішний біометричний вхід
+                    UserSession.Login(bioForm.AuthenticatedUser);
+
+                    this.Hide();
+                    Form nextForm = (bioForm.AuthenticatedUser.IsAdmin == 1) ? (Form)new AdminPannel() : (Form)new Homepage();
+                    nextForm.FormClosed += (s, ec) =>
+                    {
+                        if (nextForm is Homepage hp && hp.IsLogout)
+                        {
+                            this.Show();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
+                    };
+                    nextForm.Show();
+                }
+            }
+        }
+
+        private void AddFace_Click(object sender, EventArgs e)
+        {
+            // Зчитуємо логін, який користувач ввів у поле
+            string username = this.LoginField.Text.Trim();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                MessageBox.Show("Будь ласка, введіть ваш логін у поле для входу перед реєстрацією обличчя.", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Шукаємо користувача в базі даних за введеним логіном
+            UserModel targetUser = DbDataAccess.LoadUser(username);
+
+            if (targetUser == null)
+            {
+                MessageBox.Show("Користувача з таким логіном не знайдено! Спочатку зареєструйтесь у системі.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Відкриваємо форму реєстрації, передаючи знайденого користувача
+            using (LabApp.Forms.FaceRegistration faceRegForm = new LabApp.Forms.FaceRegistration(targetUser))
+            {
+                this.Hide(); // Тимчасово ховаємо форму логіну
+
+                faceRegForm.ShowDialog(); // Відкриваємо форму реєстрації обличчя
+
+                this.Show(); // Показуємо форму логіну знову, коли реєстрація завершиться
+            }
+        }
     }
 }
 
